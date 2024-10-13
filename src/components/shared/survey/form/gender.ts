@@ -1,10 +1,7 @@
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-  age: Yup.number()
-    .min(0)
-    .max(100)
-    .required('Please select your gender')
+  gender: Yup.string().required('Please select your gender')
 })
 
 const initialValues = {

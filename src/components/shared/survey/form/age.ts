@@ -17,6 +17,8 @@ const label = 'How old are you?'
 
 const placeholder = 'Enter your age'
 
-const requirements = { validationSchema, initialValues, label, name, placeholder }
+const type = 'number'
+
+const requirements = { validationSchema, initialValues, label, placeholder, name, type }
 
 export default requirements

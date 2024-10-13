@@ -13,7 +13,12 @@ export function FormComponent () {
 
   const onSubmit = (values: InitialValues) => {
     dispatch(updateFormData(values))
-    dispatch(updateQuestionType(QuestionType.GENDER))
+
+    if (QuestionType.GENDER === state.questionType) {
+      dispatch(updateQuestionType(QuestionType.LICENSE))
+    } else {
+      dispatch(updateQuestionType(QuestionType.GENDER))
+    }
   }
 
   return (
@@ -40,7 +45,7 @@ export function FormComponent () {
             return {
               name,
               id: name,
-              value: (values as any)[name],
+              value: (values as Record<string, string | number>)[name],
               onChange: handleChange,
               onBlur: handleBlur,
               errors,
@@ -57,8 +62,7 @@ export function FormComponent () {
                 <div className="">
                   <Input
                     {...getProps({ name: formOptions.name })}
-                    type="number"
-                    placeholder={formOptions.placeholder}
+                    {...formOptions}
                     size="xl"
                   />
                 </div>
