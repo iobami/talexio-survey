@@ -3,11 +3,11 @@
 import generateColorsCss from '@/lib/colors'
 import { ToastContainer } from 'react-toastify'
 
-import 'aos/dist/aos.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../public/scss/main.scss'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import Provider from '@/state/provider'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,9 +31,11 @@ export default function RootLayout ({
         <style type="text/css">{generateColorsCss()}</style>
         <ToastContainer />
 
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <Provider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </Provider>
       </body>
     </html>
   )

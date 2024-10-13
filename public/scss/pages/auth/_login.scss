@@ -6,7 +6,7 @@
 
   &__bg {
     max-width: 607px;
-    background-image: url('../../../media/images/auth/auth-bg.png');
+    background-image: url('../../../media/images/auth/auth-bg3.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -114,6 +114,7 @@
     justify-content: center;
     align-items: center;
     padding: 60px;
+    background-color: #f4f4f4;
 
     @include screen('xl') {
       padding: 60px 40px;
