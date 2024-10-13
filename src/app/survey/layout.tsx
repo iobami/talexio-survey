@@ -26,10 +26,10 @@ export default function Layout (props: IProps) {
   const [bgIndex, setBgIndex] = useState(0)
 
   return (
-    <div className="app_auth_login_layout">
-      <div className="app_auth_login_layout__bg">
+    <div className="app_survey_layout">
+      <div className="app_survey_layout__bg">
         <Carousel
-          className="app_auth_login_layout__carousel"
+          className="app_survey_layout__carousel"
           autoPlay
           infiniteLoop
           interval={5000}
@@ -54,32 +54,32 @@ export default function Layout (props: IProps) {
         </Carousel>
         <div className='dummy' />
 
-        <div className="app_auth_login_layout__bg__cct app_auth_login_layout__bg__relative">
-          <div className="app_auth_login_layout__bg__cct__indicator flex gap-4 item-center">
+        <div className="app_survey_layout__bg__cct app_survey_layout__bg__relative">
+          <div className="app_survey_layout__bg__cct__indicator flex gap-4 item-center">
             {[0, 1, 2].map((index) => {
               const active = index === bgIndex ? 'active' : ''
 
               return (
                 <div
                   key={index}
-                  className={`app_auth_login_layout__bg__cct__indicator__item ${active}`}
+                  className={`app_survey_layout__bg__cct__indicator__item ${active}`}
                 ></div>
               )
             })}
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="app_auth_login_layout__bg__cct__title">
+            <h3 className="app_survey_layout__bg__cct__title">
               {titleArray[bgIndex]}
             </h3>
 
-            <p className="app_auth_login_layout__bg__cct__details">
+            <p className="app_survey_layout__bg__cct__details">
               {detailsArray[bgIndex]}
             </p>
           </div>
         </div>
       </div>
-      <div className="app_auth_login_layout__cct">{children}</div>
+      <div className="app_survey_layout__cct">{children}</div>
     </div>
   )
 }

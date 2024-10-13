@@ -64,7 +64,7 @@ export default function Page () {
             size="md"
             backgroundColor='text-color-100'
             color="shark-950"
-            className="app_auth_login__btn"
+            className="app_survey__btn"
           >
             <PlusIcon fill='var(--shark-950)' />
             Create  Project
@@ -103,7 +103,7 @@ export default function Page () {
           <Button
             size="md"
             backgroundColor="shark-950"
-            className="app_auth_login__btn"
+            className="app_survey__btn"
           >
             <PlusIcon />
             Add new task

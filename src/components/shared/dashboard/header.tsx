@@ -72,7 +72,7 @@ export function Header () {
       >
         <div className="flex items-center gap-3">
           <Logo />
-          <h2 className="app_auth_login_container__header__logo__title">
+          <h2 className="app_survey_container__header__logo__title">
             Creathrivity
           </h2>
         </div>
