@@ -8,7 +8,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  hasLicense: undefined as boolean | undefined
+  hasLicense: ''
 }
 
 const name = 'hasLicense'
@@ -19,7 +19,7 @@ const type = 'toggle'
 
 enum Options {
   Yes = 'Yes',
-  No = 'No, I prefer using other transport'
+  'No, I prefer using other transport' = 'No'
 }
 
 const requirements = { validationSchema, initialValues, label, name, type, Options }

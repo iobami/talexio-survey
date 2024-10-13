@@ -15,6 +15,9 @@ export default function Page () {
           <Question questionType={QuestionType.GENDER}>
             <FormComponent questionType={QuestionType.GENDER} />
           </Question>
+          <Question questionType={QuestionType.LICENSE}>
+            <FormComponent questionType={QuestionType.LICENSE} />
+          </Question>
         </div>
       </div>
     </div>
