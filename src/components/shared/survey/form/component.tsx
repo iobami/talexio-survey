@@ -64,7 +64,7 @@ export function FormComponent (props: IProps) {
           }
 
           const renderInput = () => {
-            if (formOptions.type === 'toggle' && Options) {
+            if (formOptions.type === 'radio' && Options) {
               return (
                 <div className="flex gap-2">
                   {Object.entries(Options).map(([label, value]) => (

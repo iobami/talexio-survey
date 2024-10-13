@@ -15,7 +15,7 @@ const name = 'hasLicense'
 
 const label = 'Do you own a car driving license?'
 
-const type = 'toggle'
+const type = 'radio'
 
 enum Options {
   Yes = 'Yes',
