@@ -1,19 +1,20 @@
 import React, { type ReactNode, useContext } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AppContext } from '@/state/context'
+import { type QuestionType } from './form'
 
 interface IProps {
   children: ReactNode
-  questionNumber: number
+  questionType: QuestionType
 }
 
 export function Question (props: IProps) {
   const { state } = useContext(AppContext)
-  const { questionNumber, children } = props
+  const { questionType, children } = props
 
   return (
     <AnimatePresence initial={!false}>
-      {state.questionNumber === questionNumber && (
+      {state.questionType === questionType && (
         <motion.div
           key="content"
           initial="initial"

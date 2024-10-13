@@ -1,13 +1,10 @@
-export interface AppState {
-  formData: {
-    age: number
-  }
-  questionNumber: number
-}
+import { QuestionType } from '@/components/shared/survey/form'
 
-export const initialAppState: AppState = {
+export const initialAppState = {
   formData: {
     age: 0
   },
-  questionNumber: 1
+  questionType: QuestionType.AGE
 }
+
+export type AppState = ReturnType<() => typeof initialAppState>

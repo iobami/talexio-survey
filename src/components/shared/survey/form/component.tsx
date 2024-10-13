@@ -1,27 +1,19 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Formik } from 'formik'
-import * as Yup from 'yup'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { AppContext } from '@/state/context'
-import { updateFormData, updateQuestionNumber } from '@/state/reducer'
+import { useAppContext } from '@/state/context'
+import { updateFormData, updateQuestionType } from '@/state/reducer'
+import questions, { type InitialValues, QuestionType } from '.'
 
-const validationSchema = Yup.object().shape({
-  age: Yup.number().min(0).max(100).required('Please enter your age')
-})
+export function FormComponent () {
+  const { dispatch, state } = useAppContext()
 
-const initialValues = {
-  age: 0
-}
-
-type InitialValues = ReturnType<() => typeof initialValues>
-
-export function Age () {
-  const { dispatch, state } = useContext(AppContext)
+  const { initialValues, validationSchema, ...formOptions } = questions[state.questionType]
 
   const onSubmit = (values: InitialValues) => {
     dispatch(updateFormData(values))
-    dispatch(updateQuestionNumber(state.questionNumber + 1))
+    dispatch(updateQuestionType(QuestionType.GENDER))
   }
 
   return (
@@ -29,6 +21,7 @@ export function Age () {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        enableReinitialize
         onSubmit={onSubmit}
       >
         {(props) => {
@@ -41,13 +34,13 @@ export function Age () {
             touched
           } = props
 
-          const getProps = (args: { name: keyof InitialValues }) => {
+          const getProps = (args: { name: string }) => {
             const name = args.name
 
             return {
               name,
               id: name,
-              value: values[name],
+              value: (values as any)[name],
               onChange: handleChange,
               onBlur: handleBlur,
               errors,
@@ -58,14 +51,14 @@ export function Age () {
           return (
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
               <h3 className="app_survey__title">
-                Kindly enter your age to get started
+                {formOptions.label}
               </h3>
               <div className="flex flex-col gap-6">
                 <div className="">
                   <Input
-                    {...getProps({ name: 'age' })}
+                    {...getProps({ name: formOptions.name })}
                     type="number"
-                    placeholder="Enter your age"
+                    placeholder={formOptions.placeholder}
                     size="xl"
                   />
                 </div>

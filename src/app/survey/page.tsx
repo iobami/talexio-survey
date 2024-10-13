@@ -1,19 +1,20 @@
 'use client'
 import React from 'react'
-import { Age, Gender } from '@/components/shared/survey/form'
 import { Question } from '@/components/shared/survey/question'
+import { FormComponent } from '@/components/shared/survey/form/component'
+import { QuestionType } from '@/components/shared/survey/form'
 
 export default function Page () {
   return (
     <div className="app_survey_container">
       <div className="app_survey_container__upper">
         <div className="app_survey">
-          <Question questionNumber={1}>
-            <Age />
+          <Question questionType={QuestionType.AGE}>
+            <FormComponent />
           </Question>
 
-          <Question questionNumber={2}>
-            <Gender />
+          <Question questionType={QuestionType.GENDER}>
+            <FormComponent />
           </Question>
         </div>
       </div>
