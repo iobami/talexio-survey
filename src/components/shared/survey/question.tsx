@@ -13,19 +13,18 @@ export function Question (props: IProps) {
   const { questionType, children } = props
 
   return (
-    <AnimatePresence initial={!false}>
+    <AnimatePresence initial>
       {state.questionType === questionType && (
         <motion.div
-          key="content"
           initial="initial"
           animate="animate"
           exit="exit"
           variants={{
             initial: { opacity: 0, y: '500px' },
-            animate: { opacity: 1, y: '0' },
-            exit: { opacity: 0, y: '-500px' }
+            animate: { opacity: 1, y: '0', transition: { duration: 0.2 } },
+            exit: { opacity: 0, y: '-500px', transition: { duration: 0.2 } }
           }}
-          transition={{ ease: 'easeOut' }}
+          transition={{ ease: 'easeIn' }}
         >
           {children}
         </motion.div>

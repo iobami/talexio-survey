@@ -10,11 +10,10 @@ export default function Page () {
       <div className="app_survey_container__upper">
         <div className="app_survey">
           <Question questionType={QuestionType.AGE}>
-            <FormComponent />
+            <FormComponent questionType={QuestionType.AGE} />
           </Question>
-
           <Question questionType={QuestionType.GENDER}>
-            <FormComponent />
+            <FormComponent questionType={QuestionType.GENDER} />
           </Question>
         </div>
       </div>
