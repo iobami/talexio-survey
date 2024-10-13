@@ -6,10 +6,16 @@ import { useAppContext } from '@/state/context'
 import { updateFormData, updateQuestionType } from '@/state/reducer'
 import questions, { type InitialValues, QuestionType } from '.'
 
-export function FormComponent () {
-  const { dispatch, state } = useAppContext()
+interface IProps {
+  questionType: QuestionType
+}
 
-  const { initialValues, validationSchema, ...formOptions } = questions[state.questionType]
+export function FormComponent (props: IProps) {
+  const { questionType } = props
+  const { dispatch } = useAppContext()
+
+  const { initialValues, validationSchema, ...formOptions } =
+    questions[questionType]
 
   const onSubmit = (values: InitialValues) => {
     dispatch(updateFormData(values))
@@ -50,9 +56,7 @@ export function FormComponent () {
 
           return (
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-              <h3 className="app_survey__title">
-                {formOptions.label}
-              </h3>
+              <h3 className="app_survey__title">{formOptions.label}</h3>
               <div className="flex flex-col gap-6">
                 <div className="">
                   <Input
