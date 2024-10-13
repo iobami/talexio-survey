@@ -1,5 +1,2 @@
-import ageRequirements from './age'
-
-const questions = [ageRequirements]
-
-export default questions
+export { Age } from './age-form'
+export { Gender } from './gender'
