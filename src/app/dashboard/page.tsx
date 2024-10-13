@@ -1,23 +1,13 @@
 'use client'
 
 import { EmptyState, Pill, PlusIcon } from '@/components/shared'
-import { ProjectsTable } from '@/components/shared/dashboard'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import dashboard from '@/lib/assets/dashboard'
 import { numberFormat } from '@/lib/numbers'
-import Image from 'next/image'
 import React from 'react'
 
 enum Tasks {
   'Due Task' = 'Due Task',
   'Ongoing Task' = 'Ongoing Task'
-}
-
-enum Projects {
-  'All Projects' = 'All Projects',
-  'Pending Project' = 'Pending Project',
-  'Completed Project' = 'Completed Project'
 }
 
 function EllIcon () {
@@ -54,21 +44,8 @@ export default function Page () {
       <div className="app_dashboard_home__header">
         <div className="app_dashboard_home__header__profile_con app_dashboard_page__px">
           <div className="app_dashboard_home__header__profile">
-            <div className="app_dash_main__aside__btm__avi">
-              <Image src={dashboard.avi} alt="avi" className="w-full" />
-            </div>
-            <h4 className="app_dashboard_home__header__profile__h4">Welcome, Moyinoluwa</h4>
+            <h4 className="app_dashboard_home__header__profile__h4">Welcome</h4>
           </div>
-
-          <Button
-            size="md"
-            backgroundColor='text-color-100'
-            color="shark-950"
-            className="app_survey__btn"
-          >
-            <PlusIcon fill='var(--shark-950)' />
-            Create  Project
-          </Button>
         </div>
 
         <div className="app_dashboard_home__kpis grid grid-cols-4 app_dashboard_page__px">
@@ -118,29 +95,6 @@ export default function Page () {
             <p className="app_dashboard_home__task__ctt__desc">Click “add new request” button to get started</p>
           </div>
         </div>
-      </div>
-
-      <div className="app_dashboard_home__task app_dashboard_page__px">
-        <div className="app_dashboard_home__task__hdr flex-wrap gap-2">
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(Projects).map(([label]) => (
-              <Pill
-                key={label}
-                size='md'
-                active={Projects['All Projects'] === label}
-              >
-                {label}
-              </Pill>
-            ))}
-          </div>
-
-          <Input
-            placeholder="Search for project"
-            className="app_navbar__right__searchbar"
-          />
-        </div>
-
-        <ProjectsTable />
       </div>
     </div>
   )
