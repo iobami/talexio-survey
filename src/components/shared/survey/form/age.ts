@@ -22,7 +22,8 @@ const requirements = {
   label,
   placeholder,
   name,
-  type
+  type,
+  Options: undefined
 }
 
 export default requirements

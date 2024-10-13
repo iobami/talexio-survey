@@ -11,7 +11,7 @@ interface IProps {
   questionType: QuestionType
 }
 
-export function FormComponent(props: IProps) {
+export function FormComponent (props: IProps) {
   const { questionType } = props
   const { dispatch } = useAppContext()
 
@@ -64,7 +64,7 @@ export function FormComponent(props: IProps) {
           }
 
           const renderInput = () => {
-            if (formOptions.type === 'toggle') {
+            if (formOptions.type === 'toggle' && Options) {
               return (
                 <div className="flex gap-2">
                   {Object.entries(Options).map(([label, value]) => (

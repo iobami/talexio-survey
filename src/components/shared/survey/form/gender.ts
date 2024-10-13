@@ -16,6 +16,6 @@ const placeholder = 'Select your gender'
 
 const type = 'dropdown'
 
-const requirements = { validationSchema, initialValues, label, placeholder, name, type }
+const requirements = { validationSchema, initialValues, label, placeholder, name, type, Options: undefined }
 
 export default requirements
