@@ -18,7 +18,7 @@ export function appReducer (state: AppState, action: AppActions): AppState {
   }
 }
 
-export const updateFormData = (data: any): UpdateFormData => {
+export const updateFormData = (data: Partial<AppState['formData']>): UpdateFormData => {
   return {
     type: ActionType.UpdateFormData,
     payload: data

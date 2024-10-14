@@ -10,20 +10,21 @@ const initialValues = {
 
 const name = 'drivetrain'
 
-const label = ' Is this your first car?'
+const label = 'Which drivetrain do you prefer?'
 
 const type = 'radio'
 
 enum Options {
   FWD = 'FWD',
   RWD = 'RWD',
-  'I don’t know' = 'I don’t know',
+  "I don't know" = 'IDK',
 }
 
 const requirements = {
   validationSchema,
   initialValues,
   label,
+  placeholder: undefined,
   name,
   type,
   Options

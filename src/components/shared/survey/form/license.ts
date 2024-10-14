@@ -23,6 +23,7 @@ const requirements = {
   validationSchema,
   initialValues,
   label,
+  placeholder: undefined,
   name,
   type,
   Options

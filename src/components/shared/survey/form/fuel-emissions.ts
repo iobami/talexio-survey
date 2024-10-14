@@ -15,14 +15,15 @@ const label = 'Are you worried about fuel emissions?'
 const type = 'radio'
 
 enum Options {
-  No = 'No',
   Yes = 'Yes',
+  No = 'No'
 }
 
 const requirements = {
   validationSchema,
   initialValues,
   label,
+  placeholder: undefined,
   name,
   type,
   Options

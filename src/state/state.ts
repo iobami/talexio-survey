@@ -1,9 +1,7 @@
-import { QuestionType } from '@/components/shared/survey/form'
+import { formData, QuestionType } from '@/components/shared/survey/form'
 
 export const initialAppState = {
-  formData: {
-    age: 0
-  },
+  formData,
   questionType: QuestionType.AGE as QuestionType | number,
   direction: 1
 }

@@ -18,17 +18,17 @@ export default function Page () {
           <Question questionType={QuestionType.LICENSE}>
             <FormComponent questionType={QuestionType.LICENSE} />
           </Question>
-          <Question questionType={QuestionType.FIRSTCAR}>
-            <FormComponent questionType={QuestionType.FIRSTCAR} />
+          <Question questionType={QuestionType.FIRST_CAR}>
+            <FormComponent questionType={QuestionType.FIRST_CAR} />
           </Question>
           <Question questionType={QuestionType.DRIVETRAIN}>
             <FormComponent questionType={QuestionType.DRIVETRAIN} />
           </Question>
-          <Question questionType={QuestionType.FUELEMISSIONS}>
-            <FormComponent questionType={QuestionType.FUELEMISSIONS} />
+          <Question questionType={QuestionType.FUEL_EMISSIONS}>
+            <FormComponent questionType={QuestionType.FUEL_EMISSIONS} />
           </Question>
-          <Question questionType={QuestionType.FAMILYCARS}>
-            <FormComponent questionType={QuestionType.FAMILYCARS} />
+          <Question questionType={QuestionType.FAMILY_CARS}>
+            <FormComponent questionType={QuestionType.FAMILY_CARS} />
           </Question>
         </div>
       </div>

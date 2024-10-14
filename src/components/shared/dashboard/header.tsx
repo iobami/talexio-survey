@@ -47,7 +47,7 @@ export function Header () {
 
       <div className="app_dash_main__hdr__rgt">
         <div className="flex items-center gap-4">
-          <Link href={routes.auth.signOut.path}>
+          <Link href={routes.home.path}>
             <ArrowRightToBracket />
           </Link>
         </div>

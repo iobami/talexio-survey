@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik } from 'formik'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,8 @@ import questions, { type InitialValues, QuestionType } from '.'
 import { Pill } from '../../pill'
 import { RenderIf } from '../../render-if'
 import ValidationMessage from '@/components/ui/validation-message'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { initialAppState } from '@/state/state'
 
 interface IProps {
   questionType: QuestionType
@@ -19,15 +21,27 @@ interface IProps {
 
 export function FormComponent (props: IProps) {
   const { questionType } = props
-  const { dispatch } = useAppContext()
+  const { dispatch, state } = useAppContext()
+
+  const [isComplete, setIsComplete] = useState(false)
 
   const { initialValues, validationSchema, label, Options, ...formOptions } =
     questions[questionType]
 
-  const onSubmit = (values: InitialValues) => {
+  const onSubmit = async (values: InitialValues) => {
+    if ((values.age ?? 0) < 18 && questionType === QuestionType.GENDER) {
+      // submit form then completez
+      handleComplete()
+      return
+    }
+
+    handleNext(values)
+  }
+
+  const handleNext = (values: InitialValues, type?: QuestionType) => {
     dispatch(updateFormData(values))
     dispatch(updateDirection(1))
-    dispatch(updateQuestionType(questionType + 1))
+    dispatch(updateQuestionType(type ?? (questionType + 1)))
   }
 
   const handlePrevious = () => {
@@ -35,10 +49,43 @@ export function FormComponent (props: IProps) {
     dispatch(updateQuestionType(questionType - 1))
   }
 
+  const handleRestart = () => {
+    dispatch(updateDirection(-1))
+    dispatch(updateQuestionType(QuestionType.AGE))
+    setIsComplete(false)
+  }
+
+  const handleComplete = () => {
+    dispatch(updateFormData(initialAppState.formData))
+    dispatch(updateQuestionType(QuestionType.AGE))
+    setIsComplete(true)
+  }
+
+  if (isComplete) {
+    return (
+      <div className="flex flex-col gap-8">
+        <h3 className="app_survey__title">
+          Thanks for taking time to fill this survey!
+        </h3>
+
+        <div className="flex gap-4">
+          <Button
+            size="md"
+            backgroundColor="shark-950"
+            className="app_survey__btn"
+            onClick={handleRestart}
+          >
+            Restart survey?
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Formik
-        initialValues={initialValues}
+        initialValues={{ ...(initialValues as InitialValues), ...state.formData }}
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={onSubmit}
@@ -71,6 +118,38 @@ export function FormComponent (props: IProps) {
           }
 
           const renderInput = () => {
+            if (formOptions.type === 'dropdown' && Options) {
+              const { value, ...dropdownProps } = getProps({ name: formOptions.name })
+              const selectedValue = value ? String(value) : undefined
+
+              return (
+                <div className="flex flex-col gap-2">
+                  <Select
+                    {...dropdownProps}
+                    value={selectedValue}
+                    onValueChange={(val) => { void setFieldValue(dropdownProps.name, val) }}
+                  >
+                    <SelectTrigger className={`w-full app_select app_select--${!selectedValue ? 'unselected' : ''}`}>
+                      <SelectValue placeholder={formOptions.placeholder} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {Object.entries(Options).map(([label, value]) => (
+                          <SelectItem key={label} value={value}>{label}</SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <ValidationMessage
+                    errors={errors}
+                    name={formOptions.name}
+                    touched={touched}
+                  />
+                </div>
+              )
+            }
+
             if (formOptions.type === 'radio' && Options) {
               return (
                 <div className="flex flex-col gap-2">
@@ -78,10 +157,7 @@ export function FormComponent (props: IProps) {
                     {Object.entries(Options).map(([label, value]) => (
                       <Pill
                         key={label}
-                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                        onClick={async () =>
-                          await setFieldValue(formOptions.name, value)
-                        }
+                        onClick={() => { void setFieldValue(formOptions.name, value) }}
                         active={formValues[formOptions.name] === value}
                         size="md"
                       >
