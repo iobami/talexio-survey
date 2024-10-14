@@ -8,18 +8,18 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'ui-avatars.com',
-      }
+      },
     ],
   },
-  async redirects() {
-    return [
-      {
-        "source": "/",
-        "destination": "/survey",
-        "permanent": false
-      }
-    ];
-  }
+  // async redirects() {
+  //   return [
+  //     {
+  //       "source": "/",
+  //       "destination": "/survey",
+  //       "permanent": false
+  //     }
+  //   ];
+  // }
 };
 
 module.exports = nextConfig;

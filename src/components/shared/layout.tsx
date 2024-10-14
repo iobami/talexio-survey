@@ -4,13 +4,15 @@ interface IProps {
   children: ReactNode
 }
 
-export default function Layout (props: IProps) {
+export function Layout (props: IProps) {
   const { children } = props
 
   return (
     <div className="app_survey_layout">
       <div className="app_survey_layout__bg"></div>
-      <div className="app_survey_layout__cct">{children}</div>
+      <div className="app_survey_layout__cct">
+        <div className="app_survey_layout__cct__con">{children}</div>
+      </div>
     </div>
   )
 }
