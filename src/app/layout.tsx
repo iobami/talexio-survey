@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import '../../public/scss/main.scss'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import Provider from '@/state/provider'
+import { Layout } from '@/components/shared'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +34,7 @@ export default function RootLayout ({
 
         <Provider>
           <QueryClientProvider client={queryClient}>
-            {children}
+            <Layout>{children}</Layout>
           </QueryClientProvider>
         </Provider>
       </body>
