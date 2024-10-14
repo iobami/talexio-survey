@@ -16,11 +16,34 @@ import ValidationMessage from '@/components/ui/validation-message'
 import { useAppContext } from '@/state/context'
 import { updateDirection, updateQuestionType } from '@/state/reducer'
 
+enum Options {
+  BMW = 'BMW',
+  Toyota = 'Toyota',
+  Tesla = 'Tesla',
+  Honda = 'Honda',
+  Others = 'Others',
+}
+
+function testBMWModel (model: string) {
+  const lowerModel = model.toLowerCase()
+  const pattern1 = /^m?\d+d?$|^m?\d+i?$/
+  const pattern2 = /^[xz]\d$/
+  return pattern1.test(lowerModel) || pattern2.test(lowerModel)
+}
+
 const validationSchema = Yup.object().shape({
   cars: Yup.array().of(
     Yup.object({
       carMake: Yup.string().required('Please select car make'),
-      modelName: Yup.string().required('Please enter the model name')
+      modelName: Yup.string()
+        .required('Please enter the model name')
+        .test({
+          test: (value, ctx) => {
+            if (ctx?.parent?.carMake !== Options.BMW) return true
+            return testBMWModel(value)
+          },
+          message: 'Please enter a vaild BMW model'
+        })
     })
   )
 })
@@ -30,23 +53,18 @@ const defaultValues = {
   modelName: ''
 }
 
-enum Options {
-  BMW = 'BMW',
-  Toyota = 'Toyota',
-  Tesla = 'Tesla',
-  Honda = 'Honda',
+interface InitialValues {
+  cars: Array<typeof defaultValues>
 }
 
 export default function CarMake () {
   const { dispatch, state } = useAppContext()
 
-  const initialValues = {
+  const initialValues: InitialValues = {
     cars: Array(state.formData.familyCars ?? 0).fill(defaultValues)
   }
 
-  console.log(initialValues)
-
-  const onSubmit = (_values: any) => {}
+  const onSubmit = (_values: InitialValues) => {}
 
   const handlePrevious = () => {
     dispatch(updateDirection(-1))
@@ -89,7 +107,7 @@ export default function CarMake () {
             <FieldArray
               name="cars"
               render={() => (
-                <div className='app_survey__car_make_con flex flex-col gap-2'>
+                <div className="app_survey__car_make_con flex flex-col gap-8">
                   {values?.cars?.length > 0 &&
                     values?.cars?.map((item, index) => {
                       const { value, ...dropdownProps } = getProps({
