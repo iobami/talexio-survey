@@ -6,8 +6,6 @@ const { baseUrl } = config
 
 export interface Request {
   url: string
-  useMock?: boolean
-  mockData?: any
   body?: any
   auth?: boolean
 }
@@ -16,50 +14,15 @@ const del = async ({ url, body: data }: Request) => (await axiosInstance.delete(
   data
 })).data
 
-const get = async ({ url, auth = true, ...req }: Request) => {
-  if (req.useMock) {
-    const promise = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('Success!')
-      }, 1500)
-    })
-
-    await promise
-
-    try {
-      const data = (await (auth ? axiosInstance.get(url) : axios.get(baseUrl + url))).data
-      return req.mockData ?? data
-    } catch (error) {
-      return req.mockData
-    }
-  }
-
+const get = async ({ url, auth = true }: Request) => {
   return (await (auth ? axiosInstance.get(url) : axios.get(baseUrl + url))).data
 }
 
-const post = async ({ url, body, auth = true, ...req }: Request) => {
+const post = async ({ url, body, auth = true }: Request) => {
   const options = {
     headers: {}
   }
 
-  if (req.useMock) {
-    const promise = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('Success!')
-      }, 1500)
-    })
-
-    await promise
-
-    try {
-      const data = (await (auth ? axiosInstance.get(url) : axios.get(baseUrl + url))).data
-      return req.mockData ?? data
-    } catch (error) {
-      return req.mockData
-    }
-  }
-
-  // eslint-disable-next-line max-len
   return (await (auth ? axiosInstance.post(url, body) : axios.post(baseUrl + url, body, options))).data
 }
 

@@ -44,7 +44,7 @@ export function handleErrors (error: AxiosError) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    errorMessage = (error.response?.data as any)?.responseMessage
+    errorMessage = (error.response?.data as any)?.message
     const data = error.response?.data as any
 
     if (typeof data === 'string') return data || MSG
