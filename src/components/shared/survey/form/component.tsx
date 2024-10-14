@@ -30,7 +30,12 @@ export function FormComponent (props: IProps) {
 
   const onSubmit = async (values: InitialValues) => {
     if ((values.age ?? 0) < 18 && questionType === QuestionType.GENDER) {
-      // submit form then completez
+      // submit form then complete
+      handleComplete()
+      return
+    }
+
+    if (questionType === QuestionType.LICENSE && values.hasLicense?.toLowerCase() === 'no') {
       handleComplete()
       return
     }
@@ -57,7 +62,6 @@ export function FormComponent (props: IProps) {
 
   const handleComplete = () => {
     dispatch(updateFormData(initialAppState.formData))
-    dispatch(updateQuestionType(QuestionType.AGE))
     setIsComplete(true)
   }
 
