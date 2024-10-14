@@ -1,22 +1,28 @@
 import React from 'react'
 import { RenderIf } from '../shared'
+import { Field, getIn } from 'formik'
 
 interface IProps {
-  errors?: any
-  touched?: any
   name?: string
 }
 
 export default function ValidationMessage (props: IProps) {
-  const { errors, name = '', touched } = props
-
-  const hasError = (errors[name] && touched[name]) || false
+  const { name = '' } = props
 
   return (
-    <RenderIf condition={hasError}>
-      <div>
-        <p className="app_input_con__spt--error">{errors[name]}</p>
-      </div>
-    </RenderIf>
+    <Field name={name}>
+      {({ form }: { form: any }) => {
+        const error = getIn(form.errors, name)
+        const touch = getIn(form.touched, name)
+
+        return (
+          <RenderIf condition={error && touch}>
+            <div>
+              <p className="app_input_con__spt--error">{error}</p>
+            </div>
+          </RenderIf>
+        )
+      }}
+    </Field>
   )
 }

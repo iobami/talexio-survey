@@ -26,14 +26,13 @@ export const formData = {
   ...familyCarsRequirements.initialValues
 }
 
-type AllValues =
-  & ReturnType<() => typeof ageRequirements.initialValues>
-  & ReturnType<() => typeof genderRequirements.initialValues>
-  & ReturnType<() => typeof licenseRequirements.initialValues>
-  & ReturnType<() => typeof firstCarRequirements.initialValues>
-  & ReturnType<() => typeof drivetrainRequirements.initialValues>
-  & ReturnType<() => typeof fuelEmissionsRequirements.initialValues>
-  & ReturnType<() => typeof familyCarsRequirements.initialValues>
+type AllValues = ReturnType<() => typeof ageRequirements.initialValues> &
+ReturnType<() => typeof genderRequirements.initialValues> &
+ReturnType<() => typeof licenseRequirements.initialValues> &
+ReturnType<() => typeof firstCarRequirements.initialValues> &
+ReturnType<() => typeof drivetrainRequirements.initialValues> &
+ReturnType<() => typeof fuelEmissionsRequirements.initialValues> &
+ReturnType<() => typeof familyCarsRequirements.initialValues>
 
 export type InitialValues = Partial<AllValues>
 

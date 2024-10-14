@@ -12,7 +12,14 @@ import questions, { type InitialValues, QuestionType } from '.'
 import { Pill } from '../../pill'
 import { RenderIf } from '../../render-if'
 import ValidationMessage from '@/components/ui/validation-message'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 import { initialAppState } from '@/state/state'
 import queries from '@/services/queries/survey'
 
@@ -26,7 +33,11 @@ export function FormComponent (props: IProps) {
 
   const [isComplete, setIsComplete] = useState(false)
 
-  const { mutate, isLoading } = queries.create({ onSuccess: () => { handleComplete() } })
+  const { mutate, isLoading } = queries.create({
+    onSuccess: () => {
+      handleComplete()
+    }
+  })
 
   const { initialValues, validationSchema, label, Options, ...formOptions } =
     questions[questionType]
@@ -37,7 +48,10 @@ export function FormComponent (props: IProps) {
       return
     }
 
-    if (questionType === QuestionType.LICENSE && values.hasLicense?.toLowerCase() === 'no') {
+    if (
+      questionType === QuestionType.LICENSE &&
+      values.hasLicense?.toLowerCase() === 'no'
+    ) {
       handleComplete()
       return
     }
@@ -48,7 +62,7 @@ export function FormComponent (props: IProps) {
   const handleNext = (values: InitialValues, type?: QuestionType) => {
     dispatch(updateFormData(values))
     dispatch(updateDirection(1))
-    dispatch(updateQuestionType(type ?? (questionType + 1)))
+    dispatch(updateQuestionType(type ?? questionType + 1))
   }
 
   const handlePrevious = () => {
@@ -91,7 +105,10 @@ export function FormComponent (props: IProps) {
   return (
     <div>
       <Formik
-        initialValues={{ ...(initialValues as InitialValues), ...state.formData }}
+        initialValues={{
+          ...(initialValues as InitialValues),
+          ...state.formData
+        }}
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={onSubmit}
@@ -125,7 +142,9 @@ export function FormComponent (props: IProps) {
 
           const renderInput = () => {
             if (formOptions.type === 'dropdown' && Options) {
-              const { value, ...dropdownProps } = getProps({ name: formOptions.name })
+              const { value, ...dropdownProps } = getProps({
+                name: formOptions.name
+              })
               const selectedValue = value ? String(value) : undefined
 
               return (
@@ -133,25 +152,29 @@ export function FormComponent (props: IProps) {
                   <Select
                     {...dropdownProps}
                     value={selectedValue}
-                    onValueChange={(val) => { void setFieldValue(dropdownProps.name, val) }}
+                    onValueChange={(val) => {
+                      void setFieldValue(dropdownProps.name, val)
+                    }}
                   >
-                    <SelectTrigger className={`w-full app_select app_select--${!selectedValue ? 'unselected' : ''}`}>
+                    <SelectTrigger
+                      className={`w-full app_select app_select--${
+                        !selectedValue ? 'unselected' : ''
+                      }`}
+                    >
                       <SelectValue placeholder={formOptions.placeholder} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         {Object.entries(Options).map(([label, value]) => (
-                          <SelectItem key={label} value={value}>{label}</SelectItem>
+                          <SelectItem key={label} value={value as string}>
+                            {label}
+                          </SelectItem>
                         ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
 
-                  <ValidationMessage
-                    errors={errors}
-                    name={formOptions.name}
-                    touched={touched}
-                  />
+                  <ValidationMessage name={formOptions.name} />
                 </div>
               )
             }
@@ -163,7 +186,9 @@ export function FormComponent (props: IProps) {
                     {Object.entries(Options).map(([label, value]) => (
                       <Pill
                         key={label}
-                        onClick={() => { void setFieldValue(formOptions.name, value) }}
+                        onClick={() => {
+                          void setFieldValue(formOptions.name, value)
+                        }}
                         active={formValues[formOptions.name] === value}
                         size="md"
                       >
@@ -172,11 +197,7 @@ export function FormComponent (props: IProps) {
                     ))}
                   </div>
 
-                  <ValidationMessage
-                    errors={errors}
-                    name={formOptions.name}
-                    touched={touched}
-                  />
+                  <ValidationMessage name={formOptions.name} />
                 </div>
               )
             }

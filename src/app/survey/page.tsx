@@ -30,6 +30,9 @@ export default function Page () {
           <Question questionType={QuestionType.FAMILY_CARS}>
             <FormComponent questionType={QuestionType.FAMILY_CARS} />
           </Question>
+          {/* <Question questionType={QuestionType.CAR_MAKE}>
+            <CarMake />
+          </Question> */}
         </div>
       </div>
     </div>
