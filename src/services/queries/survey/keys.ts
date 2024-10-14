@@ -1,6 +1,6 @@
 import { getQueryKeys } from '../../helper'
 
-const namespace = 'customer-management'
+const namespace = 'survey'
 
 const keys = getQueryKeys(namespace)
 

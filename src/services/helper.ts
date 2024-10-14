@@ -1,4 +1,3 @@
-import featureFlags from '@/lib/feature-flags'
 import { type AxiosError } from 'axios'
 import { type ToastOptions, toast } from 'react-toastify'
 
@@ -40,7 +39,6 @@ export function handleErrors (error: AxiosError) {
   const MSG = 'Something went wrong'
 
   let errorMessage = ''
-  console.log(error)
 
   if (error.response) {
     // The request was made and the server responded with a status code
@@ -77,8 +75,6 @@ export function handleErrors (error: AxiosError) {
 }
 
 export const errorToast = (message = 'Something went wrong', options?: ToastOptions | undefined) => {
-  if (featureFlags.MOCK_DATA_ENABLED) return null
-
   toast.error(message, options)
 }
 

@@ -15,8 +15,6 @@ export const rootColors = {
 
   'primary-color': '#fafafa',
 
-  'wema-purple': '#9A1A87',
-
   'text-color': '#222222',
 
   'neutral-colours-nc-100': '#FAFAFA',

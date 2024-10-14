@@ -14,6 +14,7 @@ import { RenderIf } from '../../render-if'
 import ValidationMessage from '@/components/ui/validation-message'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { initialAppState } from '@/state/state'
+import queries from '@/services/queries/survey'
 
 interface IProps {
   questionType: QuestionType
@@ -25,13 +26,14 @@ export function FormComponent (props: IProps) {
 
   const [isComplete, setIsComplete] = useState(false)
 
+  const { mutate, isLoading } = queries.create({ onSuccess: () => { handleComplete() } })
+
   const { initialValues, validationSchema, label, Options, ...formOptions } =
     questions[questionType]
 
   const onSubmit = async (values: InitialValues) => {
     if ((values.age ?? 0) < 18 && questionType === QuestionType.GENDER) {
-      // submit form then complete
-      handleComplete()
+      mutate(values)
       return
     }
 
@@ -200,6 +202,7 @@ export function FormComponent (props: IProps) {
                   size="md"
                   backgroundColor="shark-950"
                   className="app_survey__btn"
+                  isLoading={isLoading}
                   type="submit"
                 >
                   Next
@@ -209,6 +212,7 @@ export function FormComponent (props: IProps) {
                   <Button
                     size="md"
                     className="app_survey__btn app_survey__btn--outline"
+                    disabled={isLoading}
                     type="button"
                     onClick={handlePrevious}
                   >
