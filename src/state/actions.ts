@@ -3,6 +3,7 @@ import { type QuestionType } from '@/components/shared/survey/form'
 export enum ActionType {
   UpdateFormData,
   UpdateQuestionType,
+  UpdateDirection,
 }
 
 export interface UpdateFormData {
@@ -15,4 +16,9 @@ export interface UpdateQuestionType {
   payload: QuestionType
 }
 
-export type AppActions = UpdateFormData | UpdateQuestionType
+export interface UpdateDirection {
+  type: ActionType.UpdateDirection
+  payload: QuestionType
+}
+
+export type AppActions = UpdateFormData | UpdateQuestionType | UpdateDirection

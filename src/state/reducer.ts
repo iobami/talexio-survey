@@ -1,15 +1,14 @@
 import { type QuestionType } from '@/components/shared/survey/form'
-import {
-  ActionType,
-  type UpdateFormData,
-  type AppActions
-} from './actions'
+import { ActionType, type UpdateFormData, type AppActions } from './actions'
 import { type AppState } from './state'
 
 export function appReducer (state: AppState, action: AppActions): AppState {
   switch (action.type) {
     case ActionType.UpdateFormData:
       return { ...state, formData: { ...state.formData, ...action.payload } }
+
+    case ActionType.UpdateDirection:
+      return { ...state, direction: action.payload }
 
     case ActionType.UpdateQuestionType:
       return { ...state, questionType: action.payload }
@@ -29,4 +28,9 @@ export const updateFormData = (data: any): UpdateFormData => {
 export const updateQuestionType = (questionType: QuestionType) => ({
   type: ActionType.UpdateQuestionType,
   payload: questionType
+})
+
+export const updateDirection = (direction: number) => ({
+  type: ActionType.UpdateDirection,
+  payload: direction
 })

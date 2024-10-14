@@ -3,9 +3,15 @@ import { Formik } from 'formik'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAppContext } from '@/state/context'
-import { updateFormData, updateQuestionType } from '@/state/reducer'
+import {
+  updateDirection,
+  updateFormData,
+  updateQuestionType
+} from '@/state/reducer'
 import questions, { type InitialValues, QuestionType } from '.'
 import { Pill } from '../../pill'
+import { RenderIf } from '../../render-if'
+import ValidationMessage from '@/components/ui/validation-message'
 
 interface IProps {
   questionType: QuestionType
@@ -20,12 +26,13 @@ export function FormComponent (props: IProps) {
 
   const onSubmit = (values: InitialValues) => {
     dispatch(updateFormData(values))
+    dispatch(updateDirection(1))
+    dispatch(updateQuestionType(questionType + 1))
+  }
 
-    if (QuestionType.GENDER === questionType) {
-      dispatch(updateQuestionType(QuestionType.LICENSE))
-    } else {
-      dispatch(updateQuestionType(QuestionType.GENDER))
-    }
+  const handlePrevious = () => {
+    dispatch(updateDirection(-1))
+    dispatch(updateQuestionType(questionType - 1))
   }
 
   return (
@@ -66,18 +73,28 @@ export function FormComponent (props: IProps) {
           const renderInput = () => {
             if (formOptions.type === 'radio' && Options) {
               return (
-                <div className="flex gap-2">
-                  {Object.entries(Options).map(([label, value]) => (
-                    <Pill
-                      key={label}
-                      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                      onClick={async () => await setFieldValue(formOptions.name, value)}
-                      active={formValues[formOptions.name] === value}
-                      size="md"
-                    >
-                      {label}
-                    </Pill>
-                  ))}
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2">
+                    {Object.entries(Options).map(([label, value]) => (
+                      <Pill
+                        key={label}
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                        onClick={async () =>
+                          await setFieldValue(formOptions.name, value)
+                        }
+                        active={formValues[formOptions.name] === value}
+                        size="md"
+                      >
+                        {label}
+                      </Pill>
+                    ))}
+                  </div>
+
+                  <ValidationMessage
+                    errors={errors}
+                    name={formOptions.name}
+                    touched={touched}
+                  />
                 </div>
               )
             }
@@ -96,11 +113,9 @@ export function FormComponent (props: IProps) {
           return (
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
               <h3 className="app_survey__title">{label}</h3>
-              <div className="flex flex-col gap-6">
-                {renderInput()}
-              </div>
+              <div className="flex flex-col gap-6">{renderInput()}</div>
 
-              <div className="">
+              <div className="flex gap-4">
                 <Button
                   size="md"
                   backgroundColor="shark-950"
@@ -109,6 +124,17 @@ export function FormComponent (props: IProps) {
                 >
                   Next
                 </Button>
+
+                <RenderIf condition={questionType !== QuestionType.AGE}>
+                  <Button
+                    size="md"
+                    className="app_survey__btn app_survey__btn--outline"
+                    type="button"
+                    onClick={handlePrevious}
+                  >
+                    Previous
+                  </Button>
+                </RenderIf>
               </div>
             </form>
           )
