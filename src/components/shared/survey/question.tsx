@@ -8,23 +8,36 @@ interface IProps {
   questionType: QuestionType
 }
 
+const variants = {
+  initial: (direction: number) => ({
+    opacity: 0,
+    y: direction === 1 ? '60vh' : '-60vh'
+  }),
+  animate: {
+    opacity: 1,
+    y: 0
+  },
+  exit: (direction: number) => ({
+    opacity: 0,
+    y: direction === 1 ? '-60vh' : '60vh'
+  })
+}
+
 export function Question (props: IProps) {
   const { state } = useContext(AppContext)
   const { questionType, children } = props
 
   return (
-    <AnimatePresence initial>
+    <AnimatePresence initial mode="popLayout" custom={state.direction}>
       {state.questionType === questionType && (
         <motion.div
+          key={state.questionType}
+          custom={state.direction}
           initial="initial"
           animate="animate"
           exit="exit"
-          variants={{
-            initial: { opacity: 0, y: '500px' },
-            animate: { opacity: 1, y: '0', transition: { duration: 0.2 } },
-            exit: { opacity: 0, y: '-500px', transition: { duration: 0.2 } }
-          }}
-          transition={{ ease: 'easeIn' }}
+          variants={variants}
+          transition={{ type: 'spring', bounce: 0.05 }}
         >
           {children}
         </motion.div>

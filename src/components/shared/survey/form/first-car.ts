@@ -1,22 +1,22 @@
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-  hasLicense: Yup.string().required('Please select one option')
+  firstCar: Yup.string().required('Please select one option')
 })
 
 const initialValues = {
-  hasLicense: ''
+  firstCar: ''
 }
 
-const name = 'hasLicense'
+const name = 'firstCar'
 
-const label = 'Do you own a car driving license?'
+const label = ' Is this your first car?'
 
 const type = 'radio'
 
 enum Options {
   Yes = 'Yes',
-  'No, I prefer using other transport' = 'No',
+  No = 'No',
 }
 
 const requirements = {
