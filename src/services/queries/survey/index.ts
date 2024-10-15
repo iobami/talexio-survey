@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
-import api from '../../api'
-import { errorToast, handleErrors } from '../../helper'
+import api from '@/services/api'
+import { errorToast, handleErrors } from '@/services/helper'
 import queryKey from './keys'
 import { type AxiosError } from 'axios'
 import config from '@/lib/config'

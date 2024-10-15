@@ -1,44 +1,24 @@
 'use client'
 
-import { EmptyState, Pill, PlusIcon } from '@/components/shared'
-import { Button } from '@/components/ui/button'
-import { numberFormat } from '@/lib/numbers'
-import React from 'react'
+import queries from '@/services/queries/results/kpis'
+import React, { useMemo } from 'react'
 
-enum Tasks {
-  'Due Task' = 'Due Task',
-  'Ongoing Task' = 'Ongoing Task'
+const useKpis = () => {
+  const { data } = queries.read()
+
+  return useMemo(() => ([
+    { label: 'Adolescents', value: data?.adolescents ?? 0 },
+    { label: 'Unlicensed', value: data?.unlicensed ?? 0 },
+    { label: 'First timers', value: data?.firstTimers ?? 0 },
+    { label: 'Targetables', value: data?.targetables ?? 0 }
+  ]), [data])
 }
-
-function EllIcon () {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g filter="url(#filter0_b_87_5448)">
-        <circle cx="14" cy="14" r="14" fill="#262626" />
-      </g>
-      <circle cx="8" cy="14" r="2" fill="#F6F6F6" />
-      <circle cx="14" cy="14" r="2" fill="#F6F6F6" />
-      <circle cx="20" cy="14" r="2" fill="#F6F6F6" />
-      <defs>
-        <filter id="filter0_b_87_5448" x="-10" y="-10" width="48" height="48" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
-          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_87_5448" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_87_5448" result="shape" />
-        </filter>
-      </defs>
-    </svg>
-  )
-}
-
-const kpis = [
-  { label: 'Active Project', value: '0' },
-  { label: 'Completed Project', value: '0' },
-  { label: 'To-do Task', value: '0' },
-  { label: <>Wallet balance <EllIcon /></>, value: numberFormat(0) }
-]
 
 export default function Page () {
+  queries.read()
+
+  const kpis = useKpis()
+
   return (
     <div className="app_dashboard_page app_dashboard_home">
       <div className="app_dashboard_home__header">
@@ -60,40 +40,6 @@ export default function Page () {
               </div>
             )
           })}
-        </div>
-      </div>
-
-      <div className="app_dashboard_home__task app_dashboard_page__px pt-4">
-        <div className="app_dashboard_home__task__hdr flex-wrap gap-2">
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(Tasks).map(([label]) => (
-              <Pill
-                key={label}
-                size='md'
-                active={Tasks['Due Task'] === label}
-              >
-                {label}
-              </Pill>
-            ))}
-          </div>
-
-          <Button
-            size="md"
-            backgroundColor="shark-950"
-            className="app_survey__btn"
-          >
-            <PlusIcon />
-            Add new task
-          </Button>
-        </div>
-
-        <div className="app_dashboard_home__task__ctt app_dashboard_home__task__ctt--empty">
-          <EmptyState />
-
-          <div className="flex flex-col gap-1">
-            <p className="app_dashboard_home__task__ctt__title">No task yet</p>
-            <p className="app_dashboard_home__task__ctt__desc">Click “add new request” button to get started</p>
-          </div>
         </div>
       </div>
     </div>
