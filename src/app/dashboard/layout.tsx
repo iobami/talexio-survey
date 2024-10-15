@@ -2,12 +2,6 @@
 
 import { Suspense, useEffect, useState } from 'react'
 import { Header, Sidebar } from '@/components/shared/dashboard'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700']
-})
 
 function Main ({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
@@ -39,16 +33,8 @@ export default function RootLayout ({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body
-        suppressHydrationWarning
-        className={inter.className}
-        id="app_dashboard_body"
-      >
-        <Suspense fallback={null}>
-          <Main>{children}</Main>
-        </Suspense>
-      </body>
-    </html>
+    <Suspense fallback={null}>
+      <Main>{children}</Main>
+    </Suspense>
   )
 }

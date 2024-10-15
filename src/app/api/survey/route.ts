@@ -10,15 +10,9 @@ export async function POST (request: Request) {
   try {
     const requestBody = (await request.json()) as AppState['formData']
 
-    const body = {
-      ...requestBody,
-      carMake: '',
-      modelName: ''
-    }
-
     const formData = new FormData()
 
-    Object.entries(body).forEach(([key, value]) => {
+    Object.entries(requestBody).forEach(([key, value]) => {
       formData.append(key, value as string)
     })
 

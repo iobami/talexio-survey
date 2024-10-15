@@ -45,8 +45,12 @@
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        background-color: var(--shark-50);
+        background-color: var(--shark-200);
         opacity: 0.5;
+
+        position: absolute;
+        right: 24px;
+        top: 24px;
       }
 
       &__indicator {

@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { FieldArray, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Input } from '@/components/ui/input'
@@ -14,7 +14,10 @@ import {
 } from '@/components/ui/select'
 import ValidationMessage from '@/components/ui/validation-message'
 import { useAppContext } from '@/state/context'
-import { updateDirection, updateQuestionType } from '@/state/reducer'
+import { updateDirection, updateFormData, updateQuestionType } from '@/state/reducer'
+import queries from '@/services/queries/survey'
+import { initialAppState } from '@/state/state'
+import { QuestionType } from '.'
 
 enum Options {
   BMW = 'BMW',
@@ -60,15 +63,57 @@ interface InitialValues {
 export default function CarMake () {
   const { dispatch, state } = useAppContext()
 
+  const [isComplete, setIsComplete] = useState(false)
+
+  const { mutate, isLoading } = queries.create({
+    onSuccess: () => {
+      handleComplete()
+    }
+  })
+
   const initialValues: InitialValues = {
     cars: Array(state.formData.familyCars ?? 0).fill(defaultValues)
   }
 
-  const onSubmit = (_values: InitialValues) => {}
+  const onSubmit = (_values: InitialValues) => {
+    mutate({ ...state.formData, carMakeAndModelName: JSON.stringify(_values.cars) })
+  }
+
+  const handleRestart = () => {
+    dispatch(updateDirection(-1))
+    dispatch(updateQuestionType(QuestionType.AGE))
+    setIsComplete(false)
+  }
 
   const handlePrevious = () => {
     dispatch(updateDirection(-1))
     dispatch(updateQuestionType(state.questionType - 1))
+  }
+
+  const handleComplete = () => {
+    dispatch(updateFormData(initialAppState.formData))
+    setIsComplete(true)
+  }
+
+  if (isComplete) {
+    return (
+      <div className="flex flex-col gap-8">
+        <h3 className="app_survey__title">
+          {'Thanks for taking time to fill this survey!'}
+        </h3>
+
+        <div className="flex gap-4">
+          <Button
+            size="md"
+            backgroundColor="shark-950"
+            className="app_survey__btn"
+            onClick={handleRestart}
+          >
+            Restart survey?
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -103,7 +148,7 @@ export default function CarMake () {
             onSubmit={handleSubmit}
             className="flex flex-col gap-10 pb-10 mb-10"
           >
-            <h3 className="app_survey__title">Select Car make</h3>
+            <h3 className="app_survey__title">Select car make and model</h3>
             <FieldArray
               name="cars"
               render={() => (
@@ -177,7 +222,7 @@ export default function CarMake () {
                 size="md"
                 backgroundColor="shark-950"
                 className="app_survey__btn"
-                isLoading={false}
+                isLoading={isLoading}
                 type="submit"
               >
                 Next
@@ -186,7 +231,7 @@ export default function CarMake () {
               <Button
                 size="md"
                 className="app_survey__btn app_survey__btn--outline"
-                disabled={false}
+                disabled={isLoading}
                 type="button"
                 onClick={handlePrevious}
               >

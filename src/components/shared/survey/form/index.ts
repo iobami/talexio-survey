@@ -24,7 +24,8 @@ export const formData = {
   ...firstCarRequirements.initialValues,
   ...drivetrainRequirements.initialValues,
   ...fuelEmissionsRequirements.initialValues,
-  ...familyCarsRequirements.initialValues
+  ...familyCarsRequirements.initialValues,
+  carMakeAndModelName: ''
 }
 
 type AllValues = ReturnType<() => typeof ageRequirements.initialValues> &
