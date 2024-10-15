@@ -56,7 +56,7 @@ const defaultValues = {
   modelName: ''
 }
 
-interface InitialValues {
+export interface InitialValues {
   cars: Array<typeof defaultValues>
 }
 
