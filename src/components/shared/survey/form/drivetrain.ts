@@ -14,7 +14,7 @@ const label = 'Which drivetrain do you prefer?'
 
 const type = 'radio'
 
-enum Options {
+export enum Options {
   FWD = 'FWD',
   RWD = 'RWD',
   "I don't know" = 'IDK',

@@ -1,4 +1,5 @@
 import config from '@/lib/config'
+import { getTargetables } from '@/lib/survey'
 import axios, { type AxiosError } from 'axios'
 
 export const dynamic = 'force-dynamic'
@@ -12,7 +13,12 @@ export async function GET () {
     const response = await axios.get(BASE_URL)
 
     if (response.data?.result === 'success') {
-      const data = { message: 'Success', sheet: response.data?.data || [] }
+      const sheet = response.data?.data || []
+
+      const data = {
+        message: 'Success',
+        kpis: getTargetables(sheet)
+      }
 
       return Response.json({ data })
     }
