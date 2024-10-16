@@ -20,7 +20,7 @@ import { QuestionType } from '@/lib/form'
 import requirements, { Options as CarMakeOptions } from '@/lib/form/car-make'
 
 const defaultValues = {
-  carMake: '',
+  carMake: '' as CarMakeOptions,
   modelName: ''
 }
 

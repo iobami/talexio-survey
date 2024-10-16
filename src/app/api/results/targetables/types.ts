@@ -1,3 +1,5 @@
+import { type Options as CarMakeOptions } from '@/lib/form/car-make'
+
 export interface Targetables {
   total: number
   totalNumberOfCars: number
@@ -9,4 +11,5 @@ export interface Targetables {
     RWD: number
     IDK: number
   }
+  carDistribution: Record<CarMakeOptions, string[]>
 }

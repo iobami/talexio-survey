@@ -4,6 +4,7 @@ import { type InitialValues } from '@/components/shared/survey/form/car-make'
 import { type Options as DrivetrainOptions } from '@/lib/form/drivetrain'
 import { type AppState } from '@/state/state'
 import formSchema from '../form/form-schema'
+import { Options as CarMakeOptions } from '../form/car-make'
 
 type TCarMakeAndModel = InitialValues['cars']
 
@@ -60,6 +61,14 @@ export function getTargetables (sheet: any): Targetables {
   let RWD = 0
   let IDK = 0
 
+  const carDistribution: Targetables['carDistribution'] = {
+    [CarMakeOptions.BMW]: [],
+    [CarMakeOptions.Toyota]: [],
+    [CarMakeOptions.Tesla]: [],
+    [CarMakeOptions.Honda]: [],
+    [CarMakeOptions.Others]: []
+  }
+
   try {
     // Loop through the data (excluding headers in row 1)
     for (let counter = 1; counter < sheet.length; counter++) {
@@ -81,20 +90,27 @@ export function getTargetables (sheet: any): Targetables {
         if (drivetrainType === 'FWD') FWD++
         if (drivetrainType === 'RWD') RWD++
         if (drivetrainType === 'IDK') IDK++
+
+        if (carMakeAndModelName.length) {
+          carMakeAndModelName.forEach((car) => {
+            carDistribution[car.carMake].push(car.modelName)
+          })
+        }
       }
     }
 
     averageCarsPerFamily = totalNumberOfCars / total
     const drivetrain = { FWD, RWD, IDK }
 
-    return { total, totalNumberOfCars, averageCarsPerFamily, caresAboutFuelEmissions, doesNotCareAboutFuelEmissions, drivetrain }
+    return { total, totalNumberOfCars, averageCarsPerFamily, caresAboutFuelEmissions, doesNotCareAboutFuelEmissions, drivetrain, carDistribution }
   } catch (error) {
     const drivetrain = { FWD, RWD, IDK }
 
-    return { total, totalNumberOfCars, averageCarsPerFamily, caresAboutFuelEmissions, doesNotCareAboutFuelEmissions, drivetrain }
+    return { total, totalNumberOfCars, averageCarsPerFamily, caresAboutFuelEmissions, doesNotCareAboutFuelEmissions, drivetrain, carDistribution }
   }
 }
 
+// TODO:: test this function
 export async function validateFormData (formData: AppState['formData']) {
   try {
     const age = formData?.age ?? 0
