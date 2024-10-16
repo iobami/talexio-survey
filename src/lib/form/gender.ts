@@ -1,8 +1,10 @@
 import * as Yup from 'yup'
 
-const validationSchema = Yup.object().shape({
+export const schema = {
   gender: Yup.string().required('Please select your gender')
-})
+}
+
+const validationSchema = Yup.object().shape(schema)
 
 const initialValues = {
   gender: ''

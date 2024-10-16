@@ -2,6 +2,8 @@ import { type SurveyKpis } from '@/app/api/results/kpis/types'
 import { type Targetables } from '@/app/api/results/targetables/types'
 import { type InitialValues } from '@/components/shared/survey/form/car-make'
 import { type Options as DrivetrainOptions } from '@/lib/form/drivetrain'
+import { type AppState } from '@/state/state'
+import formSchema from '../form/form-schema'
 
 type TCarMakeAndModel = InitialValues['cars']
 
@@ -90,5 +92,23 @@ export function getTargetables (sheet: any): Targetables {
     const drivetrain = { FWD, RWD, IDK }
 
     return { total, totalNumberOfCars, averageCarsPerFamily, caresAboutFuelEmissions, doesNotCareAboutFuelEmissions, drivetrain }
+  }
+}
+
+export async function validateFormData (formData: AppState['formData']) {
+  try {
+    const age = formData?.age ?? 0
+
+    if (age < 18) {
+      return await formSchema.adolescentsSchema.validate(formData, { abortEarly: false })
+    } else if (formData.hasLicense?.toLowerCase() === 'no') {
+      return await formSchema.unlicensedSchema.validate(formData, { abortEarly: false })
+    } else if ((age >= 18 && age <= 25) && formData.firstCar?.toLowerCase() === 'yes') {
+      return await formSchema.firstTimersSchema.validate(formData, { abortEarly: false })
+    } else {
+      return await formSchema.mainSchema.validate(formData, { abortEarly: false })
+    }
+  } catch (error) {
+    return error
   }
 }

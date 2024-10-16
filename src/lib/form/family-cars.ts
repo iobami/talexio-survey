@@ -1,10 +1,12 @@
 import * as Yup from 'yup'
 
-const validationSchema = Yup.object().shape({
+export const schema = {
   familyCars: Yup.number()
     .min(0, 'Please enter a valid number')
     .required('Please enter the number of cars')
-})
+}
+
+const validationSchema = Yup.object().shape(schema)
 
 const initialValues = {
   familyCars: undefined as number | undefined

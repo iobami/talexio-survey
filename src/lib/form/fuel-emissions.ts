@@ -1,8 +1,10 @@
 import * as Yup from 'yup'
 
-const validationSchema = Yup.object().shape({
+export const schema = {
   fuelEmissions: Yup.string().required('Please select one option')
-})
+}
+
+const validationSchema = Yup.object().shape(schema)
 
 const initialValues = {
   fuelEmissions: ''

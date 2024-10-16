@@ -1,8 +1,10 @@
 import * as Yup from 'yup'
 
-const validationSchema = Yup.object().shape({
+export const schema = {
   hasLicense: Yup.string().required('Please select one option')
-})
+}
+
+const validationSchema = Yup.object().shape(schema)
 
 const initialValues = {
   hasLicense: ''
