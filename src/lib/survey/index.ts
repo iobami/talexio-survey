@@ -110,7 +110,6 @@ export function getTargetables (sheet: any): Targetables {
   }
 }
 
-// TODO:: test this function
 export async function validateFormData (formData: AppState['formData']) {
   try {
     const age = formData?.age ?? 0
