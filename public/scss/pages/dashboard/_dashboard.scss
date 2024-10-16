@@ -74,6 +74,11 @@
         background-color: var(--iris-60);
       }
 
+      &--loading {
+        padding: 0;
+        overflow: hidden;
+      }
+
       &__h6 {
         display: flex;
         justify-content: space-between;

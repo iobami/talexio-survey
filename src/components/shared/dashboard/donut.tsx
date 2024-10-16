@@ -2,9 +2,12 @@ import React, { Fragment, useState } from 'react'
 import { PieChart, Cell, Pie, Sector } from 'recharts'
 import { Text } from '@visx/text'
 import { type DonutDataType } from '@/lib/models'
+import { SkeletonLoader } from '@/components/ui/skeleton-loader'
+import { RenderIf } from '../render-if'
 
 interface IProps {
   data: DonutDataType[0]
+  isLoading: boolean
 }
 
 const renderActiveShape = (props: any) => {
@@ -88,7 +91,7 @@ const renderActiveShape = (props: any) => {
 }
 
 export const Donut = (props: IProps) => {
-  const { data } = props
+  const { data, isLoading } = props
   const [activeIndex, setActiveIndex] = useState(0)
 
   const onPieEnter = (_: any, index: number) => {
@@ -101,75 +104,82 @@ export const Donut = (props: IProps) => {
   const oR = 65
 
   return (
-    <div className="app__donut__card">
-      <h1 className="app__donut__card__title">{data.title}</h1>
-      <div className="app__donut__card__chart flex justify-center">
-        <PieChart
-          width={250}
-          height={250}
-          margin={{ top: 35, left: 80, right: 80, bottom: 35 }}
-        >
-          <defs>
-            {data.child.map((entry, index) => {
-              const comboId = `${index}${data.id}`
-              return (
-                <Fragment key={index}>
-                  <linearGradient id={`myGradient${comboId}`}>
-                    <stop
-                      offset="0%"
-                      stopColor={entry.gradient?.start ?? entry.color}
+    <Fragment>
+      <RenderIf condition={!isLoading}>
+        <div className="app__donut__card">
+          <h1 className="app__donut__card__title">{data.title}</h1>
+          <div className="app__donut__card__chart flex justify-center">
+            <PieChart
+              width={250}
+              height={250}
+              margin={{ top: 35, left: 80, right: 80, bottom: 35 }}
+            >
+              <defs>
+                {data.child.map((entry, index) => {
+                  const comboId = `${index}${data.id}`
+                  return (
+                    <Fragment key={index}>
+                      <linearGradient id={`myGradient${comboId}`}>
+                        <stop
+                          offset="0%"
+                          stopColor={entry.gradient?.start ?? entry.color}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor={entry.gradient?.end ?? entry.color}
+                        />
+                      </linearGradient>
+                    </Fragment>
+                  )
+                })}
+              </defs>
+              <Pie
+                dataKey="value"
+                startAngle={360}
+                endAngle={0}
+                activeIndex={activeIndex}
+                activeShape={(pp: any) => renderActiveShape({ ...pp, label })}
+                data={data.child}
+                cx={cx}
+                cy={cy}
+                innerRadius={iR}
+                outerRadius={oR}
+                fill="#8884d8"
+                stroke="none"
+                paddingAngle={7}
+                cornerRadius={7}
+                onMouseEnter={onPieEnter}
+              >
+                {data.child.map((_entry, index) => {
+                  const comboId = `${index}${data.id}`
+                  return (
+                    <Cell
+                      key={`cell-${comboId}`}
+                      fill={`url(#myGradient${comboId})`}
                     />
-                    <stop
-                      offset="100%"
-                      stopColor={entry.gradient?.end ?? entry.color}
-                    />
-                  </linearGradient>
-                </Fragment>
-              )
-            })}
-          </defs>
-          <Pie
-            dataKey="value"
-            startAngle={360}
-            endAngle={0}
-            activeIndex={activeIndex}
-            activeShape={(pp: any) => renderActiveShape({ ...pp, label })}
-            data={data.child}
-            cx={cx}
-            cy={cy}
-            innerRadius={iR}
-            outerRadius={oR}
-            fill="#8884d8"
-            stroke="none"
-            paddingAngle={7}
-            cornerRadius={7}
-            onMouseEnter={onPieEnter}
-          >
-            {data.child.map((_entry, index) => {
-              const comboId = `${index}${data.id}`
-              return (
-                <Cell
-                  key={`cell-${comboId}`}
-                  fill={`url(#myGradient${comboId})`}
-                />
-              )
-            })}
-          </Pie>
-        </PieChart>
-      </div>
-      <div className="flex flex-col gap-2">
-        {data.child.map((legend, i) => (
-          <div key={i} className="app__donut__card__legend">
-            <div
-              className="app__donut__card__legend__dot"
-              style={{ backgroundColor: legend.color }}
-            />
-            <p className="app__donut__card__legend__text">
-              {legend.name} - <span>{legend.value}%</span>
-            </p>
+                  )
+                })}
+              </Pie>
+            </PieChart>
           </div>
-        ))}
-      </div>
-    </div>
+          <div className="flex flex-col gap-2">
+            {data.child.map((legend, i) => (
+              <div key={i} className="app__donut__card__legend">
+                <div
+                  className="app__donut__card__legend__dot"
+                  style={{ backgroundColor: legend.color }}
+                />
+                <p className="app__donut__card__legend__text">
+                  {legend.name} - <span>{legend.value}%</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </RenderIf>
+      <RenderIf condition={isLoading}>
+        <SkeletonLoader height={430} />
+      </RenderIf>
+    </Fragment>
   )
 }

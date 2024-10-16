@@ -9,6 +9,8 @@ import {
   type IUseGenerateData
 } from '@/lib/models'
 import { getGroupChartData, getTargetablesChartData } from '@/lib/utils'
+import { SkeletonLoader } from '@/components/ui/skeleton-loader'
+import { RenderIf } from '@/components/shared'
 
 function generateTargetablesData (params: IGenerateTargetablesData) {
   const res = getTargetablesChartData(params)
@@ -21,7 +23,7 @@ function generateGroupData (params: IUseGenerateData) {
 }
 
 const useKpis = () => {
-  const { data } = queries.read()
+  const { data, isLoading } = queries.read()
 
   return useMemo(
     () => ({
@@ -36,30 +38,33 @@ const useKpis = () => {
         firstTimers: data?.firstTimers,
         targetables: data?.targetables,
         unlicensed: data?.unlicensed
-      })
+      }),
+      isLoading
     }),
-    [data]
+    [data, isLoading]
   )
 }
 
 const useTargetables = () => {
-  const { data } = targetablesQueries.read()
+  const { data, isLoading } = targetablesQueries.read()
 
   return useMemo(
-    () =>
-      generateTargetablesData({
+    () => ({
+      ...generateTargetablesData({
         caresAboutFuelEmissions: data?.caresAboutFuelEmissions,
         doesNotCareAboutFuelEmissions: data?.doesNotCareAboutFuelEmissions,
         fwd: data?.drivetrain?.FWD,
         idk: data?.drivetrain?.IDK
       }),
-    [data]
+      isLoading
+    }),
+    [data, isLoading]
   )
 }
 
 export default function Page () {
   queries.read()
-  const { data } = targetablesQueries.read()
+  const { data, isLoading } = targetablesQueries.read()
 
   const kpis = useKpis()
   const targetables = useTargetables()
@@ -81,16 +86,25 @@ export default function Page () {
               <div
                 className={`app_dashboard_home__kpis__item ${
                   IS_TARGET ? 'app_dashboard_home__kpis__item--target' : ''
+                } ${
+                  kpis.isLoading
+                    ? 'app_dashboard_home__kpis__item--loading'
+                    : ''
                 }`}
                 key={index}
               >
-                <h6 className="app_dashboard_home__kpis__item__h6">
-                  {item.label}
-                </h6>
+                <RenderIf condition={!kpis.isLoading}>
+                  <h6 className="app_dashboard_home__kpis__item__h6">
+                    {item.label}
+                  </h6>
 
-                <p className="app_dashboard_home__kpis__item__value">
-                  {item.value}
-                </p>
+                  <p className="app_dashboard_home__kpis__item__value">
+                    {item.value}
+                  </p>
+                </RenderIf>
+                <RenderIf condition={kpis?.isLoading}>
+                  <SkeletonLoader />
+                </RenderIf>
               </div>
             )
           })}
@@ -98,19 +112,29 @@ export default function Page () {
       </div>
 
       <div className="app_dashboard_home__donut__ctt">
-        <Donut data={kpis?.chart} />
+        <Donut data={kpis?.chart} isLoading={kpis.isLoading} />
 
-        <Donut data={targetables.emissions} />
+        <Donut data={targetables.emissions} isLoading={targetables.isLoading} />
 
-        <Donut data={targetables.drivetrain} />
+        <Donut
+          data={targetables.drivetrain}
+          isLoading={targetables.isLoading}
+        />
       </div>
 
       <div className="app_dashboard_home__ctt">
-        <div className="app__donut__card">
-          <h1 className="app__donut__card__title">
-            The average amount of cars in a family is {data?.averageCarsPerFamily ?? 0}
-          </h1>
-        </div>
+        <RenderIf condition={isLoading}>
+          <SkeletonLoader height={70} />
+        </RenderIf>
+
+        <RenderIf condition={!isLoading}>
+          <div className="app__donut__card">
+            <h1 className="app__donut__card__title">
+              The average amount of cars in a family is{' '}
+              {data?.averageCarsPerFamily ?? 0}
+            </h1>
+          </div>
+        </RenderIf>
       </div>
 
       <br />
