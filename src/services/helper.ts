@@ -65,7 +65,7 @@ export function handleErrors (error: AxiosError) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
-    errorMessage = (error.request)?.message
+    errorMessage = error.request?.message
     if (errorMessage) {
       return errorMessage
     }
@@ -74,10 +74,16 @@ export function handleErrors (error: AxiosError) {
   return error.message || MSG
 }
 
-export const errorToast = (message = 'Something went wrong', options?: ToastOptions | undefined) => {
-  toast.error(message, options)
+export const errorToast = (
+  message = 'Something went wrong',
+  options?: ToastOptions | undefined
+) => {
+  toast.error(message, { ...options, toastId: message })
 }
 
-export const successToast = (message = 'Successful', options?: ToastOptions | undefined) => {
+export const successToast = (
+  message = 'Successful',
+  options?: ToastOptions | undefined
+) => {
   toast.success(message, options)
 }
