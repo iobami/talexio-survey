@@ -1,3 +1,5 @@
+import { type testChartData } from './utils'
+
 export interface ApiResponse<T> {
   isSuccess?: boolean
   responseCode?: string
@@ -15,9 +17,25 @@ export interface ApiResponse<T> {
 
 export enum PaginationEnum {
   PAGE_NUMBER = 'PageNumber',
-  PAGE_SIZE = 'PageSize'
+  PAGE_SIZE = 'PageSize',
 }
 
 export enum FilterEnum {
-  SEARCH_QUERY = 'SearchQuery'
+  SEARCH_QUERY = 'SearchQuery',
+}
+
+export type DonutDataType = ReturnType<() => typeof testChartData>
+
+export interface IUseGenerateData {
+  adolescents?: number
+  unlicensed?: number
+  firstTimers?: number
+  targetables?: number
+}
+
+export interface IGenerateTargetablesData {
+  doesNotCareAboutFuelEmissions?: number
+  caresAboutFuelEmissions?: number
+  fwd?: number
+  idk?: number
 }

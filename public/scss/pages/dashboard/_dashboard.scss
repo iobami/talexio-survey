@@ -53,7 +53,7 @@
     }
 
     &__item {
-      border: 1px solid var(--shark-100, #E7E7E7);
+      border: 1px solid var(--shark-100, #e7e7e7);
       border-radius: 8px;
       background-color: #ffffff;
       height: var(--kpi-h);
@@ -126,5 +126,12 @@
         color: var(--shark-500);
       }
     }
+  }
+
+  &__donut__ctt {
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
   }
 }
