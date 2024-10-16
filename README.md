@@ -84,10 +84,10 @@ yarn test
 
 To run integration tests:
 
-First, create a ".env" file and add local url, e.g:
+First, update ``src/integration-tests/config.ts`` file and add prod url, e.g:
 
 ``
-NEXT_PUBLIC_API_URL=https://talexio-survey.vercel.app
+https://talexio-survey.vercel.app
 ``
 
 Secondly, run the tests script:
@@ -100,10 +100,10 @@ yarn test:e2e
 
 To run integration tests locally:
 
-First, create a ".env" file and add local url, e.g:
+First, update ``src/integration-tests/config.ts`` file and add local url, e.g:
 
 ``
-NEXT_PUBLIC_API_URL=http://localhost:3000
+http://localhost:3000
 ``
 
 Secondly, run the development server:
