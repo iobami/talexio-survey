@@ -1,5 +1,5 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Talexio survey assessment, receiving feedback from users (UI inspiration - typeform), saving data to google sheet.
 
 # Getting Started
 
@@ -54,7 +54,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
 
 To build the prod server locally:
 
@@ -74,6 +73,48 @@ yarn build
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+
+To run unit tests:
+
+```bash
+npm run test
+# or
+yarn test
+```
+
+To run integration tests:
+
+```bash
+npm run test:e2e
+# or
+yarn test:e2e
+```
+
+To run integration tests locally:
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Secondly, create a ".env" file and add local url, e.g:
+
+``
+NEXT_PUBLIC_API_URL=http://localhost:3000
+``
+
+Then, run integration tests:
+
+```bash
+npm run test:e2e
+# or
+yarn test:e2e
+```
+
+Note: one test was skipped on line 6 - src/integration-tests/survey/index.e2e.ts
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 

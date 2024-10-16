@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? ''
+const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? 'https://talexio-survey.vercel.app'
 
 const config = {
   baseUrl,

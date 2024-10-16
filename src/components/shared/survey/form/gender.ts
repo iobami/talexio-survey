@@ -16,7 +16,7 @@ const placeholder = 'Select your gender'
 
 const type = 'dropdown'
 
-enum Options {
+export enum Options {
   Male = 'M',
   Female = 'F',
   Other = 'Other'

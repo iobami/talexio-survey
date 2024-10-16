@@ -1,10 +1,12 @@
 import config from '@/lib/config'
 import { type AppState } from '@/state/state'
-import { type AxiosError } from 'axios'
+import axios, { type AxiosError } from 'axios'
 
 export const dynamic = 'force-dynamic'
 
 const BASE_URL = config.GOOGLE_SHEET_URL
+
+const ERROR_MESSAGE = 'Unable to fetch results'
 
 export async function POST (request: Request) {
   try {
@@ -16,27 +18,18 @@ export async function POST (request: Request) {
       formData.append(key, value as string)
     })
 
-    const res = await fetch(BASE_URL, {
-      method: 'POST',
-      body: formData
-    }).then(async res => {
-      if (!res.ok) {
-        throw new Error('Network response was not ok')
-      }
+    const res = await axios.post(BASE_URL, formData)
 
-      return await res.json()
-    })
-
-    if (res.result === 'success') {
+    if (res.data.result === 'success') {
       return Response.json({ data: { message: 'Success' } })
     }
 
-    throw new Error('Unable to create')
+    throw new Error(ERROR_MESSAGE)
   } catch (err: any) {
     const error = err as AxiosError
 
     return Response.json(
-      { message: error.response?.statusText ?? error.message ?? 'Unable to create' },
+      { message: error.response?.statusText ?? error.message ?? ERROR_MESSAGE },
       { status: error.response?.status ?? 500 }
     )
   }
