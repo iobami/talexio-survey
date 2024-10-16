@@ -78,7 +78,7 @@ export const errorToast = (
   message = 'Something went wrong',
   options?: ToastOptions | undefined
 ) => {
-  toast.error(message, { ...options, toastId: message })
+  toast.error(message, options)
 }
 
 export const successToast = (

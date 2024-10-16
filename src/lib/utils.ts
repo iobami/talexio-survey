@@ -122,13 +122,21 @@ export function getTargetablesChartData (params: IGenerateTargetablesData) {
     caresAboutFuelEmissions = 0,
     doesNotCareAboutFuelEmissions = 0,
     fwd = 0,
-    idk = 0
+    idk = 0,
+    carDistribution = {}
   } = params
 
   const emissionsTotal =
     caresAboutFuelEmissions + doesNotCareAboutFuelEmissions
 
   const drivetrainTotal = fwd + idk
+
+  const formattedCarDistribution = Object.keys(carDistribution).map((item) => {
+    return {
+      name: item,
+      count: carDistribution[item].length
+    }
+  })
 
   const res = {
     emissions: {
@@ -158,7 +166,7 @@ export function getTargetablesChartData (params: IGenerateTargetablesData) {
     drivetrain: {
       id: 2,
       title:
-        'Percentage of targetables that picked FWD or “I don\'t know” for drivetrain',
+        "Percentage of targetables that picked FWD or “I don't know” for drivetrain",
       needle: false,
       label: '',
       child: [
@@ -175,7 +183,9 @@ export function getTargetablesChartData (params: IGenerateTargetablesData) {
           color: rootColors['shark-500']
         }
       ]
-    }
+    },
+
+    carDistribution: formattedCarDistribution
   }
 
   return res

@@ -11,6 +11,11 @@ import {
 import { getGroupChartData, getTargetablesChartData } from '@/lib/utils'
 import { SkeletonLoader } from '@/components/ui/skeleton-loader'
 import { RenderIf } from '@/components/shared'
+import dynamic from 'next/dynamic'
+
+const BarChart = dynamic(
+  async () => await import('../../components/shared/dashboard/bar-chart')
+)
 
 function generateTargetablesData (params: IGenerateTargetablesData) {
   const res = getTargetablesChartData(params)
@@ -54,7 +59,8 @@ const useTargetables = () => {
         caresAboutFuelEmissions: data?.caresAboutFuelEmissions,
         doesNotCareAboutFuelEmissions: data?.doesNotCareAboutFuelEmissions,
         fwd: data?.drivetrain?.FWD,
-        idk: data?.drivetrain?.IDK
+        idk: data?.drivetrain?.IDK,
+        carDistribution: data?.carDistribution
       }),
       isLoading
     }),
@@ -137,6 +143,12 @@ export default function Page () {
         </RenderIf>
       </div>
 
+      <div className="app_dahsboard_home__bar__chart">
+        <BarChart
+          data={targetables.carDistribution}
+          isLoading={targetables.isLoading}
+        />
+      </div>
       <br />
     </div>
   )

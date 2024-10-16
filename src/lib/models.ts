@@ -38,4 +38,5 @@ export interface IGenerateTargetablesData {
   caresAboutFuelEmissions?: number
   fwd?: number
   idk?: number
+  carDistribution?: Record<string, string[]>
 }

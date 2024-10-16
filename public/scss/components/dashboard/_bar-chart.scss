@@ -1,0 +1,12 @@
+.app_bar_chart {
+  padding: 32px;
+
+  &__ctt {
+    height: 500px;
+    gap: 2rem;
+
+    &__title {
+      text-align: center;
+    }
+  }
+}

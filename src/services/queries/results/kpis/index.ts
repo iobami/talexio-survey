@@ -16,14 +16,14 @@ const useRead = (options = {}) => {
       ...options,
       onSuccess: () => {},
       onError: (err: AxiosError) => {
-        errorToast(handleErrors(err))
+        errorToast(handleErrors(err), { toastId: 'get' })
       }
     }
   )
 
   return {
     ...response,
-    data: response.data?.data?.kpis as (SurveyKpis | undefined)
+    data: response.data?.data?.kpis as SurveyKpis | undefined
   }
 }
 

@@ -16,7 +16,7 @@ const useRead = (options = {}) => {
       ...options,
       onSuccess: () => {},
       onError: (err: AxiosError) => {
-        errorToast(handleErrors(err))
+        errorToast(handleErrors(err), { toastId: 'get' })
       }
     }
   )
