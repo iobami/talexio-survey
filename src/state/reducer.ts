@@ -1,4 +1,4 @@
-import { type QuestionType } from '@/components/shared/survey/form'
+import { type QuestionType } from '@/lib/form'
 import { ActionType, type UpdateFormData, type AppActions } from './actions'
 import { type AppState } from './state'
 

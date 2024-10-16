@@ -8,7 +8,7 @@ import {
   updateFormData,
   updateQuestionType
 } from '@/state/reducer'
-import questions, { type InitialValues, QuestionType } from '.'
+import questions, { type InitialValues, QuestionType } from '@/lib/form'
 import { Pill } from '../../pill'
 import { RenderIf } from '../../render-if'
 import ValidationMessage from '@/components/ui/validation-message'

@@ -1,13 +1,17 @@
 :root {
-  --kpi-h: 153px;
+  --kpi-h: 110px;
+
+  @include screen('md') {
+    --kpi-h: 90px;
+  }
 }
 
 .app_dashboard_home {
   &__header {
     background-color: #2b2b2b;
-    min-height: 212px;
+    min-height: 115px;
     margin-bottom: calc(var(--kpi-h) / 2);
-    padding-top: 40px;
+    padding-top: 16px;
     position: relative;
 
     @include screen('md') {
@@ -49,7 +53,7 @@
     width: 100%;
 
     @include screen('md') {
-      display: none;
+      position: unset;
     }
 
     &__item {
@@ -57,12 +61,16 @@
       border-radius: 8px;
       background-color: #ffffff;
       height: var(--kpi-h);
-      padding: 16px 24px 16px 24px;
+      padding: 8px 12px;
       display: flex;
       flex-direction: column;
       gap: 16px;
 
-      &--wallet {
+      @include screen('md') {
+        gap: 4px;
+      }
+
+      &--target {
         background-color: var(--iris-60);
       }
 
@@ -126,6 +134,10 @@
         color: var(--shark-500);
       }
     }
+  }
+
+  &__ctt {
+    padding: 0 32px;
   }
 
   &__donut__ctt {

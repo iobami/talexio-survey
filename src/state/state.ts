@@ -1,4 +1,4 @@
-import { formData, QuestionType } from '@/components/shared/survey/form'
+import { formData, QuestionType } from '@/lib/form'
 
 export const initialAppState = {
   formData,

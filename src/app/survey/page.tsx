@@ -2,7 +2,7 @@
 import React from 'react'
 import { Question } from '@/components/shared/survey/question'
 import { FormComponent } from '@/components/shared/survey/form/component'
-import { QuestionType } from '@/components/shared/survey/form'
+import { QuestionType } from '@/lib/form'
 import CarMake from '@/components/shared/survey/form/car-make'
 
 export default function Page () {

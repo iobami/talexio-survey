@@ -99,6 +99,7 @@ export const Donut = (props: IProps) => {
   const cy = '50%'
   const iR = 30
   const oR = 65
+
   return (
     <div className="app__donut__card">
       <h1 className="app__donut__card__title">{data.title}</h1>

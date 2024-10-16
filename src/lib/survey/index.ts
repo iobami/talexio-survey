@@ -1,7 +1,7 @@
 import { type SurveyKpis } from '@/app/api/results/kpis/types'
 import { type Targetables } from '@/app/api/results/targetables/types'
 import { type InitialValues } from '@/components/shared/survey/form/car-make'
-import { type Options as DrivetrainOptions } from '@/components/shared/survey/form/drivetrain'
+import { type Options as DrivetrainOptions } from '@/lib/form/drivetrain'
 
 type TCarMakeAndModel = InitialValues['cars']
 

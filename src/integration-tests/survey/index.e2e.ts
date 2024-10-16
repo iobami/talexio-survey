@@ -1,4 +1,4 @@
-import config from '@/lib/config'
+import config from '../../lib/config'
 import axios from 'axios'
 
 describe('POST /results/survey', () => {

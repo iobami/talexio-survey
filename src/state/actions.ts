@@ -1,4 +1,4 @@
-import { type QuestionType } from '@/components/shared/survey/form'
+import { type QuestionType } from '@/lib/form'
 
 export enum ActionType {
   UpdateFormData,

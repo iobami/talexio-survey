@@ -84,6 +84,14 @@ yarn test
 
 To run integration tests:
 
+First, create a ".env" file and add local url, e.g:
+
+``
+NEXT_PUBLIC_API_URL=https://talexio-survey.vercel.app
+``
+
+Secondly, run the tests script:
+
 ```bash
 npm run test:e2e
 # or
@@ -92,19 +100,19 @@ yarn test:e2e
 
 To run integration tests locally:
 
-First, run the development server:
+First, create a ".env" file and add local url, e.g:
+
+``
+NEXT_PUBLIC_API_URL=http://localhost:3000
+``
+
+Secondly, run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
 ```
-
-Secondly, create a ".env" file and add local url, e.g:
-
-``
-NEXT_PUBLIC_API_URL=http://localhost:3000
-``
 
 Then, run integration tests:
 

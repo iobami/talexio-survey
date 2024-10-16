@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react'
 import { FieldArray, Formik } from 'formik'
-import * as Yup from 'yup'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,39 +16,8 @@ import { useAppContext } from '@/state/context'
 import { updateDirection, updateFormData, updateQuestionType } from '@/state/reducer'
 import queries from '@/services/queries/survey'
 import { initialAppState } from '@/state/state'
-import { QuestionType } from '.'
-
-enum Options {
-  BMW = 'BMW',
-  Toyota = 'Toyota',
-  Tesla = 'Tesla',
-  Honda = 'Honda',
-  Others = 'Others',
-}
-
-function testBMWModel (model: string) {
-  const lowerModel = model.toLowerCase()
-  const pattern1 = /^m?\d+d?$|^m?\d+i?$/
-  const pattern2 = /^[xz]\d$/
-  return pattern1.test(lowerModel) || pattern2.test(lowerModel)
-}
-
-const validationSchema = Yup.object().shape({
-  cars: Yup.array().of(
-    Yup.object({
-      carMake: Yup.string().required('Please select car make'),
-      modelName: Yup.string()
-        .required('Please enter the model name')
-        .test({
-          test: (value, ctx) => {
-            if (ctx?.parent?.carMake !== Options.BMW) return true
-            return testBMWModel(value)
-          },
-          message: 'Please enter a vaild BMW model'
-        })
-    })
-  )
-})
+import { QuestionType } from '@/lib/form'
+import requirements, { Options as CarMakeOptions } from '@/lib/form/car-make'
 
 const defaultValues = {
   carMake: '',
@@ -64,6 +32,8 @@ export default function CarMake () {
   const { dispatch, state } = useAppContext()
 
   const [isComplete, setIsComplete] = useState(false)
+
+  const { validationSchema } = requirements
 
   const { mutate, isLoading } = queries.create({
     onSuccess: () => {
@@ -182,7 +152,7 @@ export default function CarMake () {
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup>
-                                  {Object.entries(Options).map(
+                                  {Object.entries(CarMakeOptions).map(
                                     ([label, value]) => (
                                       <SelectItem key={label} value={value}>
                                         {label}

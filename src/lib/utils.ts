@@ -158,7 +158,7 @@ export function getTargetablesChartData (params: IGenerateTargetablesData) {
     drivetrain: {
       id: 2,
       title:
-        'Percentage of targetables that picked FWD or “I don’t know” for drivetrain',
+        'Percentage of targetables that picked FWD or “I don\'t know” for drivetrain',
       needle: false,
       label: '',
       child: [
@@ -170,7 +170,7 @@ export function getTargetablesChartData (params: IGenerateTargetablesData) {
         },
         {
           id: 2,
-          name: 'I don’t know',
+          name: "I don't know",
           value: calculatePercentage(idk, drivetrainTotal),
           color: rootColors['shark-500']
         }

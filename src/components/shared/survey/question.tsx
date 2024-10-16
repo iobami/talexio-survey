@@ -1,7 +1,7 @@
 import React, { type ReactNode, useContext } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AppContext } from '@/state/context'
-import { type QuestionType } from './form'
+import { type QuestionType } from '../../../lib/form'
 
 interface IProps {
   children: ReactNode

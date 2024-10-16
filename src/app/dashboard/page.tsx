@@ -59,6 +59,7 @@ const useTargetables = () => {
 
 export default function Page () {
   queries.read()
+  const { data } = targetablesQueries.read()
 
   const kpis = useKpis()
   const targetables = useTargetables()
@@ -72,14 +73,14 @@ export default function Page () {
           </div>
         </div>
 
-        <div className="app_dashboard_home__kpis grid grid-cols-4 app_dashboard_page__px">
+        <div className="app_dashboard_home__kpis grid grid-cols-2 md:grid-cols-4 app_dashboard_page__px">
           {kpis?.count?.map((item, index) => {
-            const IS_WALLET = kpis?.count?.length === index + 1
+            const IS_TARGET = kpis?.count?.length === index + 1
 
             return (
               <div
                 className={`app_dashboard_home__kpis__item ${
-                  IS_WALLET ? 'app_dashboard_home__kpis__item--wallet' : ''
+                  IS_TARGET ? 'app_dashboard_home__kpis__item--target' : ''
                 }`}
                 key={index}
               >
@@ -95,6 +96,7 @@ export default function Page () {
           })}
         </div>
       </div>
+
       <div className="app_dashboard_home__donut__ctt">
         <Donut data={kpis?.chart} />
 
@@ -102,6 +104,16 @@ export default function Page () {
 
         <Donut data={targetables.drivetrain} />
       </div>
+
+      <div className="app_dashboard_home__ctt">
+        <div className="app__donut__card">
+          <h1 className="app__donut__card__title">
+            The average amount of cars in a family is {data?.averageCarsPerFamily ?? 0}
+          </h1>
+        </div>
+      </div>
+
+      <br />
     </div>
   )
 }
